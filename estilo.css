@@ -1,0 +1,501 @@
+/* =====================================================================
+   Cher's Wardrobe · Clueless (1995) outfit computer
+   Paleta tomada de las referencias: pantalla de leopardo, panel lavanda,
+   botones morados, texto índigo con tipografía pixel.
+   ===================================================================== */
+
+:root {
+  --lavanda: #b7b1f4;
+  --lavanda-oscura: #9d96ea;
+  --lavanda-clara: #d4d0fb;
+  --indigo: #2a1d7a;
+  --morado: #5b3fd9;
+  --morado-oscuro: #3b2797;
+  --crema: #f3ecd8;
+  --bisel: #d9d0b6;
+  --bisel-sombra: #a99f82;
+  --negro: #15102a;
+  --fuente-pixel: "Silkscreen", "Courier New", monospace;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  /* Fondo de la habitación: los ganchos del closet de Cher */
+  background: #0a0a1a url("assets/img/fondo/ganchos.jpg") center / 420px repeat;
+  font-family: var(--fuente-pixel);
+  color: var(--indigo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+::selection {
+  background-color: var(--morado);
+  color: white;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#contenedorGeneral {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ================= MONITOR ================= */
+#monitor {
+  background: linear-gradient(180deg, #e6dec6 0%, var(--bisel) 60%, #c9bfa2 100%);
+  border-radius: 28px 28px 18px 18px;
+  padding: 26px 26px 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -6px 0 var(--bisel-sombra),
+    0 30px 60px rgba(0, 0, 0, 0.65);
+  position: relative;
+}
+
+#pantalla {
+  position: relative;
+  border-radius: 16px;
+  padding: 18px 18px 14px;
+  background: #3b2a1b url("assets/img/fondo/leopardo.jpg") center / cover;
+  box-shadow:
+    inset 0 0 0 4px #1a1208,
+    inset 0 0 40px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+/* Líneas de escaneo y brillo del tubo, para que se sienta como un CRT */
+#pantalla::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 3px,
+      rgba(0, 0, 0, 0.09) 3px,
+      rgba(0, 0, 0, 0.09) 4px
+    ),
+    radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.18), transparent 55%);
+  border-radius: 16px;
+}
+
+/* ================= ENCABEZADO ================= */
+#encabezado {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.etiqueta {
+  background: var(--lavanda);
+  color: var(--indigo);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border: 3px solid var(--indigo);
+  box-shadow: 4px 4px 0 var(--indigo);
+  text-transform: uppercase;
+}
+
+/* ================= ZONA CENTRAL ================= */
+#zonaCentral {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.panel {
+  position: relative;
+  background: var(--lavanda);
+  border: 4px solid var(--indigo);
+  box-shadow:
+    inset 0 0 0 3px var(--lavanda-clara),
+    6px 6px 0 var(--indigo);
+  padding: 18px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ranura {
+  margin: 0;
+  position: relative;
+  background: linear-gradient(180deg, var(--lavanda-clara), var(--lavanda));
+  border: 3px solid var(--indigo);
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ranuraChica {
+  height: 232px;
+}
+
+.nombreRanura {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--indigo);
+  background: rgba(212, 208, 251, 0.9);
+  padding: 2px 6px;
+  border: 2px solid var(--indigo);
+  letter-spacing: 1px;
+  z-index: 2;
+}
+
+.prenda {
+  /* Todas las prendas llenan la ranura a la misma altura, como fichas del catálogo */
+  height: 82%;
+  width: auto;
+  max-width: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 6px rgba(42, 29, 122, 0.35));
+  transition: transform 0.15s ease;
+  image-rendering: auto;
+}
+
+/* Animación de cambio de prenda: parpadeo de pantalla vieja */
+.prenda.cambiando {
+  animation: parpadeo 0.28s steps(3) 1;
+}
+
+@keyframes parpadeo {
+  0% { opacity: 0; transform: scale(0.92) translateY(6px); }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; transform: none; }
+}
+
+/* Estado de error de imagen */
+.ranura.sinImagen::before {
+  content: "FILE NOT FOUND";
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--morado-oscuro);
+}
+
+.ranura.sinImagen .prenda {
+  display: none;
+}
+
+/* ---- Flechas ◀◀ ▶ ▶▶ ---- */
+.controles {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.flecha {
+  background: var(--lavanda-clara);
+  color: var(--indigo);
+  border: 3px solid var(--indigo);
+  box-shadow: 3px 3px 0 var(--indigo);
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 58px;
+  padding: 6px 10px;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.flecha:hover {
+  background: white;
+}
+
+.flecha:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--indigo);
+}
+
+/* ---- Resultado (MATCH / MIS-MATCH) ---- */
+#resultado {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(183, 177, 244, 0.96);
+  z-index: 5;
+}
+
+#resultado[hidden] {
+  display: none;
+}
+
+#bandaResultado {
+  width: 112%;
+  text-align: center;
+  background: var(--morado);
+  color: white;
+  font-weight: 700;
+  font-size: clamp(22px, 3.4vw, 38px);
+  letter-spacing: 2px;
+  padding: 12px 0;
+  border-top: 4px solid var(--indigo);
+  border-bottom: 4px solid var(--indigo);
+  box-shadow: 0 8px 0 var(--indigo);
+  text-transform: uppercase;
+}
+
+#resultado.mismatch #bandaResultado {
+  animation: sacudida 0.5s ease 1;
+}
+
+#resultado.match #bandaResultado {
+  background: #ff5fb0;
+  animation: destello 0.9s ease 2;
+}
+
+#fotoResultado {
+  max-height: 340px;
+  max-width: 100%;
+  border: 4px solid var(--indigo);
+  box-shadow: 6px 6px 0 var(--indigo);
+  background: white;
+}
+
+#textoResultado {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--indigo);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@keyframes sacudida {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@keyframes destello {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+
+/* Chispas al hacer match */
+.chispa {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  pointer-events: none;
+  animation: subir 1.2s ease-out forwards;
+  z-index: 6;
+}
+
+@keyframes subir {
+  0% { transform: translateY(0) scale(0.5); opacity: 1; }
+  100% { transform: translateY(-140px) scale(1.4) rotate(180deg); opacity: 0; }
+}
+
+/* ================= BOTONES GRANDES ================= */
+#botones {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.botonGrande {
+  flex: 1;
+  background: var(--morado);
+  color: white;
+  border: 3px solid var(--indigo);
+  box-shadow: 4px 4px 0 var(--indigo), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+  font-size: clamp(13px, 1.7vw, 18px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 12px 8px;
+  text-transform: uppercase;
+  transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.1s ease;
+}
+
+.botonGrande:hover {
+  background: #6f55ea;
+}
+
+.botonGrande:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--indigo), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+#botonDressMe {
+  background: #ff5fb0;
+}
+
+#botonDressMe:hover {
+  background: #ff7dc0;
+}
+
+/* ================= ESTADO ================= */
+#estado {
+  margin: 12px 0 8px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--crema);
+  text-shadow: 2px 2px 0 var(--negro);
+  text-transform: uppercase;
+  min-height: 16px;
+}
+
+#estado::after {
+  content: "█";
+  animation: cursor 1s steps(2) infinite;
+  margin-left: 4px;
+}
+
+@keyframes cursor {
+  to { opacity: 0; }
+}
+
+/* ================= BARRA DE CATEGORÍAS ================= */
+#barraCategorias {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  background: var(--lavanda);
+  border: 3px solid var(--indigo);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#barraCategorias span {
+  opacity: 0.8;
+}
+
+/* ================= BISEL INFERIOR ================= */
+#bisel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 6px 12px;
+}
+
+#marca {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #6f6650;
+}
+
+#botonesBisel {
+  display: flex;
+  gap: 8px;
+}
+
+.botonFisico {
+  background: #c8bea0;
+  border: 2px solid #8f8669;
+  border-radius: 4px;
+  color: #4b4433;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 10px;
+  box-shadow: inset 0 -3px 0 #a99f82, 0 2px 0 #6f6650;
+}
+
+.botonFisico[aria-pressed="true"] {
+  background: #9bd6a0;
+  border-color: #3f7a44;
+  color: #1e3d21;
+  box-shadow: inset 0 -3px 0 #6fae75, 0 2px 0 #3f7a44;
+}
+
+.botonFisico:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+#musica iframe {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  width: 260px;
+  height: 146px;
+  border: 3px solid var(--indigo);
+  box-shadow: 4px 4px 0 var(--indigo);
+  background: black;
+  z-index: 10;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 860px) {
+  #zonaCentral {
+    grid-template-columns: 1fr;
+  }
+
+  .ranura,
+  .ranuraChica {
+    height: 210px;
+  }
+
+  #encabezado {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 10px 8px;
+  }
+
+  #monitor {
+    padding: 14px 10px 0;
+  }
+
+  #pantalla {
+    padding: 10px;
+  }
+
+  #botones {
+    flex-direction: column;
+  }
+
+  #marca {
+    display: none;
+  }
+}
