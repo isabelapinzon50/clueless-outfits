@@ -1,13 +1,4 @@
-// =====================================================================
-//  Cher's Wardrobe · computadora de outfits de Clueless (1995)
-//  Basado en la plantilla base-bestiario: listas de imágenes por grupo,
-//  un número aleatorio por grupo y un botón que mezcla.
-//  Aquí hay CUATRO grupos (top, falda, zapatos, accesorio) y, cuando las
-//  cuatro prendas pertenecen al mismo outfit real, se detona el MATCH:
-//  aparece la foto del outfit completo, chispas y un sonido.
-// =====================================================================
 
-// ---------- 1. Los outfits completos (sirven para detectar el MATCH) ----------
 const OUTFITS = {
   argyle:   { nombre: "Argyle azul · shopping day",      foto: "assets/img/fotos/argyle.jpg" },
   naranja:  { nombre: "Cuadros naranja · Tai",            foto: "assets/img/fotos/naranja.jpg" },
@@ -19,8 +10,7 @@ const OUTFITS = {
   plisada:  { nombre: "Falda plisada · cardigan crema",   foto: "assets/img/fotos/plisada.jpg" },
 };
 
-// ---------- 2. Listas de prendas por grupo (mínimo 3 por grupo) ----------
-// Cada prenda tiene su imagen y el outfit al que pertenece (null = prenda suelta).
+
 const PRENDAS = {
   top: [
     { src: "assets/img/tops/argyle.png",   outfit: "argyle" },
@@ -79,7 +69,7 @@ const PRENDAS = {
 
 const CATEGORIAS = ["top", "falda", "zapatos", "acc"];
 
-// ---------- 3. Elementos del HTML ----------
+
 const imagenes = {
   top: document.getElementById("imgTop"),
   falda: document.getElementById("imgFalda"),
@@ -99,17 +89,15 @@ const textoResultado = document.getElementById("textoResultado");
 const panelPrincipal = document.getElementById("panelPrincipal");
 const contenedorMusica = document.getElementById("musica");
 
-// ---------- 4. Estado: índice elegido en cada grupo ----------
 const indice = { top: 0, falda: 0, zapatos: 0, acc: 0 };
 let sonidoActivo = true;
 let musicaActiva = false;
 
-// ---------- 5. Utilidades ----------
 function numeroAleatorio(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-// Número aleatorio distinto al actual (si la lista tiene más de una opción)
+
 function aleatorioDistinto(categoria) {
   const total = PRENDAS[categoria].length;
   if (total < 2) return 0;
@@ -122,14 +110,14 @@ function escribirEstado(texto) {
   estado.textContent = texto;
 }
 
-// ---------- 6. Mostrar una prenda en su ranura ----------
+
 function mostrarPrenda(categoria) {
   const prenda = PRENDAS[categoria][indice[categoria]];
   const img = imagenes[categoria];
   const ranura = img.closest(".ranura");
   ranura.classList.remove("sinImagen");
   img.classList.remove("cambiando");
-  void img.offsetWidth; // reinicia la animación
+  void img.offsetWidth;
   img.classList.add("cambiando");
   img.src = prenda.src;
 }
@@ -138,12 +126,11 @@ function mostrarTodo() {
   CATEGORIAS.forEach(mostrarPrenda);
 }
 
-// Si una imagen no carga, la ranura lo indica en lugar de quedar vacía
+
 Object.values(imagenes).forEach((img) => {
   img.addEventListener("error", () => img.closest(".ranura").classList.add("sinImagen"));
 });
 
-// ---------- 7. Acciones de las flechas ◀◀ ▶ ▶▶ ----------
 function cambiarPrenda(categoria, accion) {
   const total = PRENDAS[categoria].length;
   if (accion === "prev") indice[categoria] = (indice[categoria] - 1 + total) % total;
@@ -166,7 +153,7 @@ document.querySelectorAll(".controles").forEach((grupo) => {
   });
 });
 
-// ---------- 8. BROWSE: mezcla las cuatro prendas al azar ----------
+
 function browse() {
   ocultarResultado();
   CATEGORIAS.forEach((c) => (indice[c] = aleatorioDistinto(c)));
@@ -175,7 +162,7 @@ function browse() {
   escribirEstado("BROWSING... CLICK DRESS ME TO CHECK THE LOOK");
 }
 
-// ---------- 9. AUTO DRESS: arma un outfit completo real ----------
+
 function autoDress() {
   ocultarResultado();
   const nombres = Object.keys(OUTFITS);
@@ -187,25 +174,24 @@ function autoDress() {
   });
   mostrarTodo();
   escribirEstado("AUTO DRESS... COMPUTING OUTFIT");
-  // Pequeña pausa para que se vean las prendas antes de la detonación
+  
   setTimeout(evaluar, 650);
 }
 
-// Devuelve el nombre del outfit si las cuatro prendas coinciden, o null
 function outfitActual() {
   const grupos = CATEGORIAS.map((c) => PRENDAS[c][indice[c]].outfit);
   if (grupos[0] && grupos.every((g) => g === grupos[0])) return grupos[0];
   return null;
 }
 
-// ---------- 10. DRESS ME: evalúa la combinación ----------
+
 function evaluar() {
   const match = outfitActual();
   if (match) {
     detonarMatch(match);
     return;
   }
-  // ¿Cuántas prendas comparten outfit? (para dar pistas)
+ 
   const conteo = {};
   CATEGORIAS.forEach((c) => {
     const o = PRENDAS[c][indice[c]].outfit;
@@ -247,7 +233,7 @@ function ocultarResultado() {
   panelPrincipal.querySelectorAll(".chispa").forEach((c) => c.remove());
 }
 
-// Al hacer clic sobre el resultado se vuelve a las prendas
+
 resultado.addEventListener("click", () => {
   ocultarResultado();
   escribirEstado("BROWSING...");
@@ -273,8 +259,7 @@ botonDressMe.addEventListener("click", () => {
   evaluar();
 });
 
-// ---------- 11. BONUS: sonidos sintetizados con Web Audio ----------
-// No se usan archivos de audio: los tonos se generan en el navegador.
+
 let contextoAudio = null;
 
 function audio() {
@@ -308,13 +293,13 @@ function sonarClick() {
 }
 
 function sonarMatch() {
-  // Arpegio ascendente de computadora de los 90
+
   [523, 659, 784, 1047, 1319].forEach((f, i) => tono(f, i * 0.09, 0.25, "square", 0.07));
   tono(1568, 0.5, 0.6, "triangle", 0.06);
 }
 
 function sonarMismatch() {
-  // Zumbido descendente de error
+
   tono(220, 0, 0.18, "sawtooth", 0.08);
   tono(160, 0.2, 0.35, "sawtooth", 0.08);
 }
@@ -326,8 +311,7 @@ botonSonido.addEventListener("click", () => {
   if (sonidoActivo) sonarClick();
 });
 
-// ---------- 12. Música de la página (YouTube, se carga al pulsar) ----------
-const VIDEO_MUSICA = "XherTMC_FgA"; // Luscious Jackson - Here (enlace del material)
+const VIDEO_MUSICA = "XherTMC_FgA";
 
 botonMusica.addEventListener("click", () => {
   musicaActiva = !musicaActiva;
@@ -343,14 +327,13 @@ botonMusica.addEventListener("click", () => {
   }
 });
 
-// ---------- 13. Estado inicial: la página nunca aparece vacía ----------
+
 function iniciar() {
-  // Arranca con un outfit real (sin revelar el match) para que la primera
-  // pantalla se vea coherente, igual que la de Cher en la película.
+
   const nombres = Object.keys(OUTFITS);
   const inicial = nombres[numeroAleatorio(0, nombres.length)];
   CATEGORIAS.forEach((c) => (indice[c] = PRENDAS[c].findIndex((p) => p.outfit === inicial)));
-  // Pero desordena dos prendas para que haya algo que resolver
+ 
   indice.zapatos = aleatorioDistinto("zapatos");
   indice.acc = aleatorioDistinto("acc");
   mostrarTodo();

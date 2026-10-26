@@ -9,12 +9,12 @@
       content="Recreación interactiva de la computadora que usa Cher Horowitz en Clueless (1995) para elegir sus outfits."
     />
 
-    <!-- OpenGraph -->
+    
     <meta property="og:locale" content="es_CO" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Cher's Wardrobe · Clueless Outfit Generator" />
 
-    <!-- Tipografía pixel (dependencia externa estable: Google Fonts). Si no carga, se usa monospace. -->
+   
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,27 +22,26 @@
       rel="stylesheet"
     />
 
-    <!-- Esto importa la hoja de estilos de la página -->
+   
     <link rel="stylesheet" href="estilo.css" />
 
-    <!-- Esto importa el archivo de JavaScript de la página -->
+
     <script src="script.js" defer></script>
   </head>
 
   <body>
     <main id="contenedorGeneral">
-      <!-- ================= MONITOR ================= -->
+   
       <div id="monitor">
         <div id="pantalla">
-          <!-- Encabezado: dos etiquetas como en la película -->
+        
           <header id="encabezado">
             <span class="etiqueta" id="etiquetaIzq">CHER'S WARDROBE</span>
             <span class="etiqueta" id="etiquetaDer">FALL FASHIONS</span>
           </header>
 
-          <!-- Zona central -->
           <section id="zonaCentral">
-            <!-- Panel principal: parte de arriba y parte de abajo -->
+        
             <div class="panel" id="panelPrincipal">
               <figure class="ranura" data-categoria="top">
                 <span class="nombreRanura">TOP</span>
@@ -64,7 +63,6 @@
                 <button class="flecha" data-accion="next" aria-label="Siguiente parte de abajo">▶▶</button>
               </div>
 
-              <!-- Resultado (MATCH / MIS-MATCH) se superpone al panel -->
               <div id="resultado" hidden>
                 <div id="bandaResultado"></div>
                 <img id="fotoResultado" alt="" hidden />
@@ -72,7 +70,7 @@
               </div>
             </div>
 
-            <!-- Panel lateral: zapatos y accesorio -->
+        
             <div class="panel" id="panelLateral">
               <figure class="ranura ranuraChica" data-categoria="zapatos">
                 <span class="nombreRanura">SHOES</span>
@@ -96,24 +94,24 @@
             </div>
           </section>
 
-          <!-- Botones grandes -->
+          
           <nav id="botones">
             <button class="botonGrande" id="botonBrowse">BROWSE</button>
             <button class="botonGrande" id="botonAuto">AUTO DRESS</button>
             <button class="botonGrande" id="botonDressMe">DRESS ME</button>
           </nav>
 
-          <!-- Línea de estado (texto que "escribe" la computadora) -->
+       
           <p id="estado" aria-live="polite">LOADING WARDROBE...</p>
 
-          <!-- Barra inferior de categorías, como en la película -->
+      
           <footer id="barraCategorias">
             <span>SHOES</span><span>JEWELRY</span><span>SCARVES</span><span>PANTYHOSE</span
             ><span>UNDERWEAR</span><span>PANTS</span><span>SWEATERS</span><span>MORE</span>
           </footer>
         </div>
 
-        <!-- Marco inferior del monitor con "botones" físicos -->
+     
         <div id="bisel">
           <span id="marca">H O R O W I T Z · 95</span>
           <div id="botonesBisel">
@@ -123,7 +121,7 @@
         </div>
       </div>
 
-      <!-- Reproductor de música (se inserta solo al pulsar el botón, para respetar el autoplay del navegador) -->
+     
       <div id="musica" hidden></div>
     </main>
   </body>

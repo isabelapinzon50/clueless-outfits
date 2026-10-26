@@ -1,8 +1,3 @@
-/* =====================================================================
-   Cher's Wardrobe · Clueless (1995) outfit computer
-   Paleta tomada de las referencias: pantalla de leopardo, panel lavanda,
-   botones morados, texto índigo con tipografía pixel.
-   ===================================================================== */
 
 :root {
   --lavanda: #b7b1f4;
@@ -37,7 +32,7 @@ body {
 
 body {
   min-height: 100vh;
-  /* Fondo de la habitación: los ganchos del closet de Cher */
+
   background: #0a0a1a url("assets/img/fondo/ganchos.jpg") center / 420px repeat;
   font-family: var(--fuente-pixel);
   color: var(--indigo);
@@ -62,7 +57,6 @@ button {
   max-width: 1100px;
 }
 
-/* ================= MONITOR ================= */
 #monitor {
   background: linear-gradient(180deg, #e6dec6 0%, var(--bisel) 60%, #c9bfa2 100%);
   border-radius: 28px 28px 18px 18px;
@@ -85,7 +79,6 @@ button {
   overflow: hidden;
 }
 
-/* Líneas de escaneo y brillo del tubo, para que se sienta como un CRT */
 #pantalla::after {
   content: "";
   position: absolute;
@@ -103,7 +96,7 @@ button {
   border-radius: 16px;
 }
 
-/* ================= ENCABEZADO ================= */
+
 #encabezado {
   display: flex;
   justify-content: space-between;
@@ -123,7 +116,6 @@ button {
   text-transform: uppercase;
 }
 
-/* ================= ZONA CENTRAL ================= */
 #zonaCentral {
   display: grid;
   grid-template-columns: 1.35fr 1fr;
@@ -175,7 +167,7 @@ button {
 }
 
 .prenda {
-  /* Todas las prendas llenan la ranura a la misma altura, como fichas del catálogo */
+
   height: 82%;
   width: auto;
   max-width: 90%;
@@ -185,7 +177,7 @@ button {
   image-rendering: auto;
 }
 
-/* Animación de cambio de prenda: parpadeo de pantalla vieja */
+
 .prenda.cambiando {
   animation: parpadeo 0.28s steps(3) 1;
 }
@@ -196,7 +188,7 @@ button {
   100% { opacity: 1; transform: none; }
 }
 
-/* Estado de error de imagen */
+
 .ranura.sinImagen::before {
   content: "FILE NOT FOUND";
   font-size: 13px;
@@ -208,7 +200,7 @@ button {
   display: none;
 }
 
-/* ---- Flechas ◀◀ ▶ ▶▶ ---- */
+
 .controles {
   display: flex;
   justify-content: center;
@@ -236,7 +228,7 @@ button {
   box-shadow: 0 0 0 var(--indigo);
 }
 
-/* ---- Resultado (MATCH / MIS-MATCH) ---- */
+
 #resultado {
   position: absolute;
   inset: 0;
@@ -309,7 +301,7 @@ button {
   50% { filter: brightness(1.5); }
 }
 
-/* Chispas al hacer match */
+
 .chispa {
   position: absolute;
   width: 10px;
@@ -326,7 +318,7 @@ button {
   100% { transform: translateY(-140px) scale(1.4) rotate(180deg); opacity: 0; }
 }
 
-/* ================= BOTONES GRANDES ================= */
+
 #botones {
   display: flex;
   justify-content: space-between;
@@ -365,7 +357,6 @@ button {
   background: #ff7dc0;
 }
 
-/* ================= ESTADO ================= */
 #estado {
   margin: 12px 0 8px;
   text-align: center;
@@ -388,7 +379,6 @@ button {
   to { opacity: 0; }
 }
 
-/* ================= BARRA DE CATEGORÍAS ================= */
 #barraCategorias {
   display: flex;
   justify-content: space-between;
@@ -406,7 +396,7 @@ button {
   opacity: 0.8;
 }
 
-/* ================= BISEL INFERIOR ================= */
+
 #bisel {
   display: flex;
   justify-content: space-between;
@@ -460,7 +450,6 @@ button {
   z-index: 10;
 }
 
-/* ================= RESPONSIVE ================= */
 @media (max-width: 860px) {
   #zonaCentral {
     grid-template-columns: 1fr;
